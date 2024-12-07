@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Security\Entity;
+namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use App\Security\Enum\RoleEnum;
@@ -27,8 +27,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var list<string> The user roles
      */
-    #[ORM\Column(type: 'string', columnDefinition: "ENUM('ROLE_USER', 'ROLE_MANAGER', 'ROLE_ADMIN')")]
-    private string $roles = RoleEnum::ROLE_USER->value;
+    #[ORM\Column]
+    private array $roles = [RoleEnum::ROLE_USER->value];
 
     /**
      * @var string The hashed password
@@ -77,16 +77,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = RoleEnum::ROLE_USER->value;
 
-        return $roles;
+        return array_unique($roles);
     }
 
     /**
-     * @param string $role
+     * @param list<string> $roles
      */
-    public function setRoles(string $role): static
+    public function setRoles(array $roles): static
     {
-        $this->roles = $role;
+        $this->roles = $roles;
 
         return $this;
     }
