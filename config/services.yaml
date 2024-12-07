@@ -20,5 +20,17 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
+    App\Security\Validator\UniqueEmailValidator:
+        arguments:
+            $userQueryRepository: '@App\Security\Repository\UserQueryRepositoryInterface'
+        tags: [ 'validator.constraint_validator' ]
+
+    App\Security\Validator\PasswordMatchValidator:
+    App\Security\Validator\PasswordStrengthValidator:
+        tags: [ 'validator.constraint_validator' ]
+
+    App\Security\Handler\RegisterUserHandler:
+        tags: [ 'messenger.message_handler' ]
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

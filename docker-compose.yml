@@ -61,8 +61,6 @@ networks:
   KaroRoadWeb-network:
     driver: bridge
 volumes:
-  KaroRoadWeb-volume:
-    driver: local
   KaroRoadWeb-mysql:
     driver: local
   KaroRoadWeb-test-mysql:
