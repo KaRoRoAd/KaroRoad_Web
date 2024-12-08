@@ -4,14 +4,10 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata\ApiResource;
 use App\Task\Repository\TaskRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ApiResource]
 #[ORM\Entity(repositoryClass: TaskRepository::class)]
 class Task
 {
@@ -26,15 +22,15 @@ class Task
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $deadLine = null;
 
-    /**
-     * @var Collection<int, UserTask>
-     */
-    #[ORM\ManyToMany(targetEntity: UserTask::class, mappedBy: 'task')]
-    private Collection $userTasks;
+    #[ORM\ManyToOne(inversedBy: 'tasks')]
+    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\Column(name: 'user_id')]
+    private ?User $userId = null;
+
 
     public function __construct()
     {
-        $this->userTasks = new ArrayCollection();
+
     }
 
     public function getId(): ?int
@@ -66,29 +62,14 @@ class Task
         return $this;
     }
 
-    /**
-     * @return Collection<int, UserTask>
-     */
-    public function getUserTasks(): Collection
+    public function getUserId(): ?User
     {
-        return $this->userTasks;
+        return $this->userId;
     }
 
-    public function addUserTask(UserTask $userTask): static
+    public function setUserId(?User $userId): static
     {
-        if (!$this->userTasks->contains($userTask)) {
-            $this->userTasks->add($userTask);
-            $userTask->addTask($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUserTask(UserTask $userTask): static
-    {
-        if ($this->userTasks->removeElement($userTask)) {
-            $userTask->removeTask($this);
-        }
+        $this->userId = $userId;
 
         return $this;
     }

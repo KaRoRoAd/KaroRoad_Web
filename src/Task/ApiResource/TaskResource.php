@@ -7,6 +7,10 @@ namespace App\Task\ApiResource;
 use ApiPlatform\Doctrine\Orm\State\Options;
 use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\Shared\State\EntityClassDtoStateProcessor;
 use App\Shared\State\EntityToDtoStateProvider;
@@ -16,6 +20,19 @@ use DateTime;
 #[ApiResource(
     shortName: 'Task',
     operations: [
+        new GetCollection(
+            uriTemplate: '/task',
+            stateless: true,
+            description: 'Get all tasks',
+            name: 'api_get_tasks'
+        ),
+        new Get(
+            uriTemplate: '/task/{id}',
+            requirements: ['id' => '\d+'],
+            stateless: true,
+            description: 'Get a task',
+            name: 'api_get_task'
+        ),
         new Post(
             uriTemplate: '/task',
             stateless: true,
@@ -24,6 +41,19 @@ use DateTime;
             output: false,
             name: 'api_create_task'
         ),
+        new Patch(
+            uriTemplate: '/task/{id}',
+            stateless: true,
+            description: 'Update a task',
+            name: 'api_update_task'
+        ),
+        new Delete(
+            uriTemplate: '/task/{id}',
+            requirements: ['id' => '\d+'],
+            stateless: true,
+            description: 'Delete a task',
+            name: 'api_delete_task'
+        )
     ],
     provider: EntityToDtoStateProvider::class,
     processor: EntityClassDtoStateProcessor::class,
@@ -36,7 +66,7 @@ final class TaskResource
         #[ApiProperty(readable: true, writable: false, identifier: true)]
         public ?int $id = null,
         public ?string $name = null,
-        public ?DateTime $deadLine = null
+        public ?DateTime $deadLine = null,
     ) {
     }
 }

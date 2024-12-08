@@ -18,24 +18,24 @@ doctrine:
             Doctrine\DBAL\Platforms\PostgreSQLPlatform: identity
         auto_mapping: true
         mappings:
-            App:
+#            App:
+#                type: attribute
+#                is_bundle: false
+#                dir: '%kernel.project_dir%/src/Entity'
+#                prefix: 'App\Entity'
+#                alias: App
+            App\Security:
                 type: attribute
                 is_bundle: false
-                dir: '%kernel.project_dir%/src/Entity'
-                prefix: 'App\Entity'
-                alias: App
-#            App\Security:
-#                type: attribute
-#                is_bundle: false
-#                dir: '%kernel.project_dir%/src/Security/Entity'
-#                prefix: 'App\Security\Entity'
-#                alias: App\Security
-#            App\Task:
-#                type: attribute
-#                is_bundle: false
-#                dir: '%kernel.project_dir%/src/Task/Entity'
-#                prefix: 'App\Task\Entity'
-#                alias: App\Task
+                dir: '%kernel.project_dir%/src/Security/Entity'
+                prefix: 'App\Security\Entity'
+                alias: App\Security
+            App\Task:
+                type: attribute
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/Task/Entity'
+                prefix: 'App\Task\Entity'
+                alias: App\Task
         controller_resolver:
             auto_mapping: false
 

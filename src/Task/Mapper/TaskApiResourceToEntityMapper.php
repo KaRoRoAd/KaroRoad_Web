@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Task\Mapper;
 
+use App\Shared\Owner\OwnerProviderInterface;
 use App\Task\ApiResource\TaskResource;
 use App\Task\Entity\Task;
 use App\Task\Repository\TaskRepositoryInterface;
@@ -15,6 +16,7 @@ final readonly class TaskApiResourceToEntityMapper implements MapperInterface
 {
     public function __construct(
         private TaskRepositoryInterface $repository,
+        private OwnerProviderInterface $ownerProvider
     ) {
     }
 
@@ -23,7 +25,7 @@ final readonly class TaskApiResourceToEntityMapper implements MapperInterface
         $dto = $from;
         assert($dto instanceof TaskResource);
 
-        return $dto->id ? $this->repository->find($dto->id) : new TaskResource(
+        return $dto->id ? $this->repository->find($dto->id) : new Task(
             name: $dto->name,
             deadLine: $dto->deadLine,
         );
@@ -38,6 +40,7 @@ final readonly class TaskApiResourceToEntityMapper implements MapperInterface
 
         $entity->setName($dto->name);
         $entity->setDeadLine($dto->deadLine);
+        $entity->setOwnerId($this->ownerProvider->getOwnerDto()?->id);
 
         return $entity;
     }

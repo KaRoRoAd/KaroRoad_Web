@@ -20,6 +20,11 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
+    'App\Task\ApiExtension\CurrentOwnerExtension':
+        tags:
+            - { name: api_platform.doctrine.orm.query_extension.collection }
+            - { name: api_platform.doctrine.orm.query_extension.item }
+
     App\Security\Validator\UniqueEmailValidator:
         arguments:
             $userQueryRepository: '@App\Security\Repository\UserQueryRepositoryInterface'

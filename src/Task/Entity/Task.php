@@ -3,6 +3,7 @@
 namespace App\Task\Entity;
 
 use App\Task\Repository\TaskRepository;
+use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -18,7 +19,16 @@ class Task
     private ?string $name = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $deadLine = null;
+    private ?DateTimeInterface $deadLine = null;
+
+    #[ORM\Column(name: 'user_id', type: Types::INTEGER, nullable: true)]
+    private ?int $ownerId = null;
+
+    public function __construct(string $name, DateTimeInterface $deadLine)
+    {
+        $this->name = $name;
+        $this->deadLine = $deadLine;
+    }
 
     public function getId(): ?int
     {
@@ -45,6 +55,18 @@ class Task
     public function setDeadLine(?\DateTimeInterface $deadLine): static
     {
         $this->deadLine = $deadLine;
+
+        return $this;
+    }
+
+    public function getOwnerId(): ?int
+    {
+        return $this->ownerId;
+    }
+
+    public function setOwnerId(int $ownerId): static
+    {
+        $this->ownerId = $ownerId;
 
         return $this;
     }
