@@ -67,6 +67,8 @@ final class TaskResource
         public ?int $id = null,
         public ?string $name = null,
         public ?DateTime $deadLine = null,
+        public ?int $employeeId = null,
+        public ?string $status = null,
     ) {
     }
 }

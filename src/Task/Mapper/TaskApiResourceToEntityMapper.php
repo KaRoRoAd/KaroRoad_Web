@@ -27,7 +27,6 @@ final readonly class TaskApiResourceToEntityMapper implements MapperInterface
 
         return $dto->id ? $this->repository->find($dto->id) : new Task(
             name: $dto->name,
-            deadLine: $dto->deadLine,
         );
     }
 
@@ -38,8 +37,8 @@ final readonly class TaskApiResourceToEntityMapper implements MapperInterface
         assert($dto instanceof TaskResource);
         assert($entity instanceof Task);
 
-        $entity->setName($dto->name);
         $entity->setDeadLine($dto->deadLine);
+        $entity->setEmployeeId($dto->employeeId);
         $entity->setOwnerId($this->ownerProvider->getOwnerDto()?->id);
 
         return $entity;

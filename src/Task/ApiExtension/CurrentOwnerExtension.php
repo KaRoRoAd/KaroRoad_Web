@@ -36,7 +36,9 @@ final readonly class CurrentOwnerExtension implements QueryCollectionExtensionIn
         }
 
         $rootAlias = $queryBuilder->getRootAliases()[0];
-        $queryBuilder->andWhere(sprintf('%s.ownerId = :current_user', $rootAlias))
+        $queryBuilder->orWhere(sprintf('%s.ownerId = :current_user', $rootAlias))
+            ->setParameter('current_user', $user->getId());
+        $queryBuilder->orWhere(sprintf('%s.employeeId = :current_user', $rootAlias))
             ->setParameter('current_user', $user->getId());
     }
 }

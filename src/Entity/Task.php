@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use App\Task\Repository\TaskRepository;
+use App\Repository\TaskRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -19,19 +19,19 @@ class Task
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $deadLine = null;
-
     #[ORM\ManyToOne(inversedBy: 'tasks')]
     #[ORM\JoinColumn(nullable: false)]
-    #[ORM\Column(name: 'user_id')]
-    private ?User $userId = null;
+    private ?User $owner = null;
 
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?User $employee = null;
 
-    public function __construct()
-    {
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $deadline = null;
 
-    }
+    #[ORM\Column(length: 255)]
+    private ?string $status = null;
 
     public function getId(): ?int
     {
@@ -50,26 +50,50 @@ class Task
         return $this;
     }
 
-    public function getDeadLine(): ?\DateTimeInterface
+    public function getOwner(): ?User
     {
-        return $this->deadLine;
+        return $this->owner;
     }
 
-    public function setDeadLine(?\DateTimeInterface $deadLine): static
+    public function setOwner(?User $owner): static
     {
-        $this->deadLine = $deadLine;
+        $this->owner = $owner;
 
         return $this;
     }
 
-    public function getUserId(): ?User
+    public function getEmployee(): ?User
     {
-        return $this->userId;
+        return $this->employee;
     }
 
-    public function setUserId(?User $userId): static
+    public function setEmployee(?User $employee): static
     {
-        $this->userId = $userId;
+        $this->employee = $employee;
+
+        return $this;
+    }
+
+    public function getDeadline(): ?\DateTimeInterface
+    {
+        return $this->deadline;
+    }
+
+    public function setDeadline(\DateTimeInterface $deadline): static
+    {
+        $this->deadline = $deadline;
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): static
+    {
+        $this->status = $status;
 
         return $this;
     }

@@ -10,7 +10,7 @@ use Symfonycasts\MicroMapper\AsMapper;
 use Symfonycasts\MicroMapper\MapperInterface;
 
 #[AsMapper(from: Task::class, to: TaskResource::class)]
-final class TaskEntityToApiResourceMapper implements MapperInterface
+final readonly class TaskEntityToApiResourceMapper implements MapperInterface
 {
     public function load(object $from, string $toClass, array $context): object
     {
@@ -32,6 +32,7 @@ final class TaskEntityToApiResourceMapper implements MapperInterface
 
        $dto->name = $entity->getName();
        $dto->deadLine = $entity->getDeadLine();
+       $dto->status = $entity->getStatus();
 
         return $dto;
     }

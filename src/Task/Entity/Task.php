@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Task\Entity;
 
+use App\Task\Enum\StatusEnum;
 use App\Task\Repository\TaskRepository;
-use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -18,16 +20,22 @@ class Task
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?DateTimeInterface $deadLine = null;
-
-    #[ORM\Column(name: 'user_id', type: Types::INTEGER, nullable: true)]
+    #[ORM\Column(name: 'owner_id', type: Types::INTEGER, nullable: false)]
     private ?int $ownerId = null;
 
-    public function __construct(string $name, DateTimeInterface $deadLine)
+    #[ORM\Column(name: 'employee_id', type: Types::INTEGER, nullable: true)]
+    private ?int $employeeId = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $deadline = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $status = null;
+
+    public function __construct(string $name)
     {
         $this->name = $name;
-        $this->deadLine = $deadLine;
+        $this->status = StatusEnum::NEW->value;
     }
 
     public function getId(): ?int
@@ -47,26 +55,50 @@ class Task
         return $this;
     }
 
-    public function getDeadLine(): ?\DateTimeInterface
-    {
-        return $this->deadLine;
-    }
-
-    public function setDeadLine(?\DateTimeInterface $deadLine): static
-    {
-        $this->deadLine = $deadLine;
-
-        return $this;
-    }
-
     public function getOwnerId(): ?int
     {
         return $this->ownerId;
     }
 
-    public function setOwnerId(int $ownerId): static
+    public function setOwnerId(?int $ownerId): static
     {
         $this->ownerId = $ownerId;
+
+        return $this;
+    }
+
+    public function getEmployeeId(): ?int
+    {
+        return $this->employeeId;
+    }
+
+    public function setEmployeeId(?int $employeeId): static
+    {
+        $this->employeeId = $employeeId;
+
+        return $this;
+    }
+
+    public function getDeadline(): ?\DateTimeInterface
+    {
+        return $this->deadline;
+    }
+
+    public function setDeadline(\DateTimeInterface $deadline): static
+    {
+        $this->deadline = $deadline;
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): static
+    {
+        $this->status = $status;
 
         return $this;
     }

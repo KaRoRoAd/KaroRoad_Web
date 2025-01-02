@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata\ApiResource;
 use App\Security\Enum\RoleEnum;
 use App\Security\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -13,7 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-#[ApiResource]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -38,10 +36,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
+    #[ORM\ManyToOne(inversedBy: 'users')]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?Firm $firm = null;
+
     /**
      * @var Collection<int, Task>
      */
-    #[ORM\OneToMany(targetEntity: Task::class, mappedBy: 'user_id', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Task::class, mappedBy: 'ownerId', orphanRemoval: true)]
     private Collection $tasks;
 
     public function __construct(string $email, string $password)
@@ -126,6 +128,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
+    public function getFirm(): ?Firm
+    {
+        return $this->firm;
+    }
+
+    public function setFirm(?Firm $firm): static
+    {
+        $this->firm = $firm;
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, Task>
      */
@@ -138,7 +152,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->tasks->contains($task)) {
             $this->tasks->add($task);
-            $task->setUserId($this);
+            $task->setOwner($this);
         }
 
         return $this;
@@ -148,8 +162,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->tasks->removeElement($task)) {
             // set the owning side to null (unless already changed)
-            if ($task->getUserId() === $this) {
-                $task->setUserId(null);
+            if ($task->getOwner() === $this) {
+                $task->setOwner(null);
             }
         }
 
