@@ -1,9 +1,15 @@
 #!/bin/bash
 
 if [ ! -d "vendor" ]; then
-  composer install
+    composer install
 fi
 
 php bin/console cache:clear
 
-exec docker-php-entrypoint apache2-foreground
+php bin/console doctrine:migrations:migrate --no-interaction
+
+php bin/console messenger:consume async -vv
+
+php bin/console lexik:jwt:generate-keypair
+
+exec apache2-foreground

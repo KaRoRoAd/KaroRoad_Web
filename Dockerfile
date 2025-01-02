@@ -8,16 +8,31 @@ RUN apt-get update -y && apt-get install -y \
     unzip \
     && docker-php-ext-install pdo pdo_mysql
 
+# Ustawienie katalogu roboczego
 WORKDIR /var/www
 
+# Kopiowanie plików aplikacji do kontenera
 COPY . .
 
+# Kopiowanie pliku konfiguracji Apache
 COPY ./docker/vhost.conf /etc/apache2/sites-available/000-default.conf
 
+COPY ./docker/entrypoint.sh /docker/entrypoint.sh
+
+# Instalacja Composer
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
+# Ustawienie uprawnień do folderu
 RUN chown -R www-data:www-data /var/www
 
+# Włączenie modułu rewrite w Apache
 RUN a2enmod rewrite
 
+# Ustawienie uprawnień do skryptu entrypoint.sh
+RUN chmod +x /docker/entrypoint.sh
+
+# Ustawienie zmiennej środowiskowej
 ENV PORT=80
+
+# Ustawienie domyślnego punktu wejścia
+ENTRYPOINT ["/docker/entrypoint.sh"]

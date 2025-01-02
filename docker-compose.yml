@@ -33,30 +33,6 @@ services:
       retries: 3
       timeout: 5s
 
-  mysql_test:
-    image: 'mysql:latest'
-    ports:
-      - '${FORWARD_DB_PORT:-3310}:3306'
-    environment:
-      MYSQL_ROOT_PASSWORD: 'KaroRoadWeb123!'
-      MYSQL_ROOT_HOST: '%'
-      MYSQL_DATABASE: 'KaroRoadWebTest'
-      MYSQL_USER: 'KaroRoadWeb'
-      MYSQL_PASSWORD: 'KaroRoadWeb123!'
-      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
-    volumes:
-      - 'KaroRoadWeb-test-mysql:/var/lib/mysql'
-    networks:
-      - KaroRoadWeb-network
-    healthcheck:
-      test:
-        - CMD
-        - mysqladmin
-        - ping
-        - '-pKaroRoadWeb123!'
-      retries: 3
-      timeout: 5s
-
 networks:
   KaroRoadWeb-network:
     driver: bridge
