@@ -14,7 +14,7 @@ use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\Shared\State\EntityClassDtoStateProcessor;
 use App\Shared\State\EntityToDtoStateProvider;
-use App\Task\Entity\Task;
+use App\Firm\Entity\Firm;
 use DateTime;
 
 #[ApiResource(

@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace App\Firm\Repository;
 
 use App\Firm\Entity\Firm;
-use App\Task\Entity\Task;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Task>
+ * @extends ServiceEntityRepository<Firm>
  */
 final class FirmRepository extends ServiceEntityRepository implements FirmRepositoryInterface
 {
