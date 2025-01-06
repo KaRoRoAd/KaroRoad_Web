@@ -25,6 +25,11 @@ services:
             - { name: api_platform.doctrine.orm.query_extension.collection }
             - { name: api_platform.doctrine.orm.query_extension.item }
 
+    'App\Firm\ApiExtension\CurrentOwnerExtension':
+        tags:
+            - { name: api_platform.doctrine.orm.query_extension.collection }
+            - { name: api_platform.doctrine.orm.query_extension.item }
+
     App\Security\Validator\UniqueEmailValidator:
         arguments:
             $userQueryRepository: '@App\Security\Repository\UserQueryRepositoryInterface'
