@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Security\Entity;
 
-use App\Firm\Entity\Firm;
 use App\Task\Entity\Task;
 use App\Security\Enum\RoleEnum;
 use App\Security\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -38,21 +38,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\ManyToOne(inversedBy: 'users')]
-    #[ORM\JoinColumn(nullable: true)]
-    private ?Firm $firm = null;
+    #[ORM\Column(name: 'firm_id', type: Types::INTEGER, nullable: true)]
+    private ?int $firmId = null;
 
-    /**
-     * @var Collection<int, Task>
-     */
-    #[ORM\OneToMany(targetEntity: Task::class, mappedBy: 'ownerId', orphanRemoval: true)]
-    private Collection $tasks;
 
     public function __construct(string $email, string $password)
     {
         $this->email = $email;
         $this->password = $password;
-        $this->tasks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -130,45 +123,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    public function getFirm(): ?Firm
+    public function getFirmId(): ?int
     {
-        return $this->firm;
+        return $this->firmId;
     }
 
-    public function setFirm(?Firm $firm): static
+    public function setFirmId(?int $firmId): void
     {
-        $this->firm = $firm;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Task>
-     */
-    public function getTasks(): Collection
-    {
-        return $this->tasks;
-    }
-
-    public function addTask(Task $task): static
-    {
-        if (!$this->tasks->contains($task)) {
-            $this->tasks->add($task);
-            $task->setOwner($this);
-        }
-
-        return $this;
-    }
-
-    public function removeTask(Task $task): static
-    {
-        if ($this->tasks->removeElement($task)) {
-            // set the owning side to null (unless already changed)
-            if ($task->getOwner() === $this) {
-                $task->setOwner(null);
-            }
-        }
-
-        return $this;
+        $this->firmId = $firmId;
     }
 }

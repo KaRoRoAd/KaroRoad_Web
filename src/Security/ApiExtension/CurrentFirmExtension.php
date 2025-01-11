@@ -2,17 +2,18 @@
 
 declare(strict_types=1);
 
-namespace App\Firm\ApiExtension;
+namespace App\Security\ApiExtension;
 
 use ApiPlatform\Doctrine\Orm\Extension\QueryCollectionExtensionInterface;
 use ApiPlatform\Doctrine\Orm\Extension\QueryItemExtensionInterface;
 use ApiPlatform\Doctrine\Orm\Util\QueryNameGeneratorInterface;
 use ApiPlatform\Metadata\Operation;
 use App\Firm\Entity\Firm;
+use App\Security\Entity\User;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bundle\SecurityBundle\Security;
 
-final readonly class CurrentOwnerExtension implements QueryCollectionExtensionInterface, QueryItemExtensionInterface
+final readonly class CurrentFirmExtension implements QueryCollectionExtensionInterface, QueryItemExtensionInterface
 {
     public function __construct(
         private Security $security,
@@ -31,12 +32,14 @@ final readonly class CurrentOwnerExtension implements QueryCollectionExtensionIn
 
     private function addWhere(QueryBuilder $queryBuilder, string $resourceClass): void
     {
-        if ($resourceClass !== Firm::class || null === $user = $this->security->getUser()) {
+        if ($resourceClass !== User::class || null === $user = $this->security->getUser()) {
             return;
         }
 
         $rootAlias = $queryBuilder->getRootAliases()[0];
-        $queryBuilder->andWhere(sprintf('%s.ownerId = :current_user', $rootAlias))
+        $queryBuilder->andWhere(sprintf('%s.firmId = :current_firm', $rootAlias))
+            ->setParameter('current_firm', $user->getFirmId());
+        $queryBuilder->andWhere(sprintf('%s.id != :current_user', $rootAlias))
             ->setParameter('current_user', $user->getId());
     }
 }

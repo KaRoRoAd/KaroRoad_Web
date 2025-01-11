@@ -43,9 +43,9 @@ security:
     access_control:
         - { path: ^/api/login/check, roles: PUBLIC_ACCESS }
         - { path: ^/api/users, roles: PUBLIC_ACCESS }
-        - { path: ^/api/task, roles: [ROLE_USER] }
+        - { path: ^/api/task, roles: [ROLE_USER, ROLE_MANAGER, ROLE_ADMIN] }
         - { path: ^/api$, roles: PUBLIC_ACCESS }
-        - { path: ^/api, roles: [ROLE_USER] }
+        - { path: ^/api, roles: [ROLE_USER, ROLE_MANAGER, ROLE_ADMIN] }
 
 when@test:
     security:

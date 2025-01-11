@@ -2,12 +2,10 @@
 
 namespace App\Entity;
 
-use App\Repository\FirmRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: FirmRepository::class)]
+
+#[ORM\Entity]
 class Firm
 {
     #[ORM\Id]
@@ -18,16 +16,8 @@ class Firm
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    /**
-     * @var Collection<int, User>
-     */
-    #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'firmId')]
-    private Collection $users;
-
-    public function __construct()
-    {
-        $this->users = new ArrayCollection();
-    }
+    #[ORM\Column]
+    private ?int $ownerId = null;
 
     public function getId(): ?int
     {
@@ -46,32 +36,14 @@ class Firm
         return $this;
     }
 
-    /**
-     * @return Collection<int, User>
-     */
-    public function getUsers(): Collection
+    public function getOwnerId(): ?int
     {
-        return $this->users;
+        return $this->ownerId;
     }
 
-    public function addUser(User $user): static
+    public function setOwnerId(int $ownerId): static
     {
-        if (!$this->users->contains($user)) {
-            $this->users->add($user);
-            $user->setFirm($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUser(User $user): static
-    {
-        if ($this->users->removeElement($user)) {
-            // set the owning side to null (unless already changed)
-            if ($user->getFirm() === $this) {
-                $user->setFirm(null);
-            }
-        }
+        $this->ownerId = $ownerId;
 
         return $this;
     }

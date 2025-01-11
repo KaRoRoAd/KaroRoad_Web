@@ -16,4 +16,5 @@ enum ValidationMessageEnum: string
     case PASSWORD_STRENGTH_UPPERCASE = 'Hasło musi zawierać przynajmniej jedną dużą literę.';
     case PASSWORD_STRENGTH_SPECIAL_CHARACTER = 'Hasło musi zawierać przynajmniej jeden znak specjalny.';
     case PASSWORD_STRENGTH_NUMBER = 'Hasło musi zawierać przynajmniej jedną cyfrę.';
+    case FIRM_ID_REQUIRED = 'Pole firmId nie może być puste.';
 }

@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App\Firm\Mapper;
 
+use App\Firm\Exception\UserHasFirmException;
 use App\Shared\Owner\OwnerProviderInterface;
 use App\Firm\ApiResource\FirmResource;
 use App\Firm\Entity\Firm;
 use App\Firm\Repository\FirmRepositoryInterface;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfonycasts\MicroMapper\AsMapper;
 use Symfonycasts\MicroMapper\MapperInterface;
 
@@ -25,6 +27,12 @@ final readonly class FirmApiResourceToEntityMapper implements MapperInterface
         $dto = $from;
         assert($dto instanceof FirmResource);
 
+        $ownerId = $this->ownerProvider->getOwnerDto()->id;
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $this->guard($ownerId);
+        }
+
         return $dto->id ? $this->repository->find($dto->id) : new Firm(
             name: $dto->name,
         );
@@ -38,8 +46,18 @@ final readonly class FirmApiResourceToEntityMapper implements MapperInterface
         assert($entity instanceof Firm);
 
         $entity->setName($dto->name);
+        $entity->setOwnerId($this->ownerProvider->getOwnerDto()->id);
 
         return $entity;
+    }
+
+    private function guard(int $ownerId):void
+    {
+        $existingFirm = $this->repository->findOneBy(['ownerId' => $ownerId]);
+
+        if ($existingFirm) {
+            throw new UserHasFirmException();
+        }
     }
 }
 

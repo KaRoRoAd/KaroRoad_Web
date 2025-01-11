@@ -66,6 +66,7 @@ final class FirmResource
         #[ApiProperty(readable: true, writable: false, identifier: true)]
         public ?int $id = null,
         public ?string $name = null,
+        public ?int $ownerId = null,
     ) {
     }
 }
