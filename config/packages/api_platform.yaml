@@ -19,6 +19,7 @@ api_platform:
         - '%kernel.project_dir%/src/Security/ApiResource'
         - '%kernel.project_dir%/src/Task/ApiResource'
         - '%kernel.project_dir%/src/Meet/ApiResource'
+        - '%kernel.project_dir%/src/Firm/ApiResource'
     swagger:
         api_keys:
             JWT:
