@@ -17,9 +17,9 @@ final readonly class MeetUserEntityToApiResourceMapper implements MapperInterfac
     public function load(object $from, string $toClass, array $context): object
     {
         $entity = $from;
-        assert($entity instanceof Meet);
+        assert($entity instanceof MeetsUsers);
 
-        $dto = new MeetResource();
+        $dto = new MeetUserResource();
         $dto->id = $entity->getId();
 
         return $dto;
@@ -29,12 +29,11 @@ final readonly class MeetUserEntityToApiResourceMapper implements MapperInterfac
     {
         $entity = $from;
         $dto = $to;
-        assert($entity instanceof Meet);
-        assert($dto instanceof MeetResource);
+        assert($entity instanceof MeetsUsers);
+        assert($dto instanceof MeetUserResource);
 
-       $dto->name = $entity->getName();
-       $dto->startDate = $entity->getStartDate();
-       $dto->endDate = $entity->getEndDate();
+       $dto->meetId = $entity->getMeetId();
+       $dto->userId = $entity->getUserId();
 
         return $dto;
     }

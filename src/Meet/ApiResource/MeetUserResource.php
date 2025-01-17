@@ -16,21 +16,8 @@ use App\Shared\State\EntityClassDtoStateProcessor;
 use App\Shared\State\EntityToDtoStateProvider;
 
 #[ApiResource(
-    shortName: 'Meet',
+    shortName: 'MeetsUsers',
     operations: [
-//        new GetCollection(
-//            uriTemplate: '/meet',
-//            stateless: true,
-//            description: 'Get all meets',
-//            name: 'api_get_meets'
-//        ),
-//        new Get(
-//            uriTemplate: '/meet/{id}',
-//            requirements: ['id' => '\d+'],
-//            stateless: true,
-//            description: 'Get a meet',
-//            name: 'api_get_meet'
-//        ),
         new Post(
             uriTemplate: '/meet_user',
             stateless: true,
@@ -39,13 +26,15 @@ use App\Shared\State\EntityToDtoStateProvider;
             output: false,
             name: 'api_create_meet_user'
         ),
-//        new Delete(
-//            uriTemplate: '/meet/{id}',
-//            requirements: ['id' => '\d+'],
-//            stateless: true,
-//            description: 'Delete a meet',
-//            name: 'api_delete_meet'
-//        )
+        new Delete(
+            uriTemplate: '/meet_user/{id}',
+            requirements: ['id' => '\d+'],
+            stateless: true,
+            status: 204,
+            description: 'Delete a meetUser',
+            output: false,
+            name: 'api_delete_meet_user'
+        ),
     ],
     provider: EntityToDtoStateProvider::class,
     processor: EntityClassDtoStateProcessor::class,
@@ -57,7 +46,7 @@ final class MeetUserResource
     public function __construct(
         #[ApiProperty(readable: true, writable: false, identifier: true)]
         public ?int $id = null,
-        public ?string $meetId = null,
+        public ?int $meetId = null,
         public ?int $userId = null,
     ) {
     }
