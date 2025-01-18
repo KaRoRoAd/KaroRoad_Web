@@ -30,9 +30,9 @@ final readonly class TaskEntityToApiResourceMapper implements MapperInterface
         assert($entity instanceof Task);
         assert($dto instanceof TaskResource);
 
-       $dto->name = $entity->getName();
-       $dto->deadLine = $entity->getDeadLine();
-       $dto->status = $entity->getStatus();
+        $dto->name = $entity->getName();
+        $dto->deadLine = $entity->getDeadLine();
+        $dto->status = $entity->getStatus();
 
         return $dto;
     }

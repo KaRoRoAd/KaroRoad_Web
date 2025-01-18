@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace App\Tests\Security\Factory;
 
-use App\Security\Entity\Firm;
+use App\Firm\Entity\Firm;
 use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
+use Zenstruck\Foundry\Persistence\Proxy;
 
 /**
  * @extends PersistentProxyObjectFactory<Firm>
@@ -43,7 +44,8 @@ final class FirmFactory extends PersistentProxyObjectFactory
     protected function defaults(): array|callable
     {
         return [
-            'uuid' => self::faker()->uuid(),
+            'name' => self::faker()->name(),
+            'ownerId' => self::faker()->numberBetween(1, 5),
         ];
     }
 
@@ -55,5 +57,10 @@ final class FirmFactory extends PersistentProxyObjectFactory
         return $this
             ->afterInstantiate(static function (Firm $firm): void {
             });
+    }
+
+    public static function createOneWithOwner(int $ownerId): Proxy
+    {
+        return self::new(['ownerId' => $ownerId])->create();
     }
 }

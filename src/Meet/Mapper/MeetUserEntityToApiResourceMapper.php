@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\Meet\Mapper;
 
-use App\Meet\ApiResource\MeetResource;
 use App\Meet\ApiResource\MeetUserResource;
-use App\Meet\Entity\Meet;
 use App\Meet\Entity\MeetsUsers;
 use Symfonycasts\MicroMapper\AsMapper;
 use Symfonycasts\MicroMapper\MapperInterface;
@@ -32,8 +30,8 @@ final readonly class MeetUserEntityToApiResourceMapper implements MapperInterfac
         assert($entity instanceof MeetsUsers);
         assert($dto instanceof MeetUserResource);
 
-       $dto->meetId = $entity->getMeetId();
-       $dto->userId = $entity->getUserId();
+        $dto->meetId = $entity->getMeetId();
+        $dto->userId = $entity->getUserId();
 
         return $dto;
     }

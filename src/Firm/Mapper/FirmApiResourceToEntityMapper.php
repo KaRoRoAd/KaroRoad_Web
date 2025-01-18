@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace App\Firm\Mapper;
 
-use App\Firm\Exception\UserHasFirmException;
-use App\Shared\Owner\OwnerProviderInterface;
 use App\Firm\ApiResource\FirmResource;
 use App\Firm\Entity\Firm;
+use App\Firm\Exception\UserHasFirmException;
 use App\Firm\Repository\FirmRepositoryInterface;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use App\Security\Enum\RoleEnum;
+use App\Security\Repository\UserRepository;
+use App\Shared\Owner\OwnerProviderInterface;
 use Symfonycasts\MicroMapper\AsMapper;
 use Symfonycasts\MicroMapper\MapperInterface;
 
@@ -18,7 +19,8 @@ final readonly class FirmApiResourceToEntityMapper implements MapperInterface
 {
     public function __construct(
         private FirmRepositoryInterface $repository,
-        private OwnerProviderInterface $ownerProvider
+        private OwnerProviderInterface $ownerProvider,
+        private UserRepository $userRepository,
     ) {
     }
 
@@ -45,13 +47,18 @@ final readonly class FirmApiResourceToEntityMapper implements MapperInterface
         assert($dto instanceof FirmResource);
         assert($entity instanceof Firm);
 
+        $user = $this->userRepository->find($this->ownerProvider->getOwnerDto()->id);
+        $user->setRoles([RoleEnum::ROLE_MANAGER->value]);
+
+        $this->userRepository->save($user);
+
         $entity->setName($dto->name);
         $entity->setOwnerId($this->ownerProvider->getOwnerDto()->id);
 
         return $entity;
     }
 
-    private function guard(int $ownerId):void
+    private function guard(int $ownerId): void
     {
         $existingFirm = $this->repository->findOneBy(['ownerId' => $ownerId]);
 
@@ -60,4 +67,3 @@ final readonly class FirmApiResourceToEntityMapper implements MapperInterface
         }
     }
 }
-

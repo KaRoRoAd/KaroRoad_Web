@@ -30,9 +30,9 @@ final readonly class MeetEntityToApiResourceMapper implements MapperInterface
         assert($entity instanceof Meet);
         assert($dto instanceof MeetResource);
 
-       $dto->name = $entity->getName();
-       $dto->startDate = $entity->getStartDate();
-       $dto->endDate = $entity->getEndDate();
+        $dto->name = $entity->getName();
+        $dto->startDate = $entity->getStartDate();
+        $dto->endDate = $entity->getEndDate();
 
         return $dto;
     }

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Security\Mapper;
 
 use App\Security\ApiResource\FirmManagementResource;
-use App\Security\ApiResource\UserResource;
 use App\Security\Entity\User;
 use Symfonycasts\MicroMapper\AsMapper;
 use Symfonycasts\MicroMapper\MapperInterface;

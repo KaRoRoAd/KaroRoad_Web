@@ -52,7 +52,7 @@ use App\Shared\State\EntityToDtoStateProvider;
             stateless: true,
             description: 'Delete a meet',
             name: 'api_delete_meet'
-        )
+        ),
     ],
     provider: EntityToDtoStateProvider::class,
     processor: EntityClassDtoStateProcessor::class,

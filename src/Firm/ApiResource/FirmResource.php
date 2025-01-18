@@ -12,10 +12,9 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
+use App\Firm\Entity\Firm;
 use App\Shared\State\EntityClassDtoStateProcessor;
 use App\Shared\State\EntityToDtoStateProvider;
-use App\Firm\Entity\Firm;
-use DateTime;
 
 #[ApiResource(
     shortName: 'Firm',
@@ -53,7 +52,7 @@ use DateTime;
             stateless: true,
             description: 'Delete a firm',
             name: 'api_delete_firm'
-        )
+        ),
     ],
     provider: EntityToDtoStateProvider::class,
     processor: EntityClassDtoStateProcessor::class,

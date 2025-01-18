@@ -43,12 +43,9 @@ final class UserFactory extends PersistentProxyObjectFactory
     protected function defaults(): array|callable
     {
         return [
-            'name' => self::faker()->name(),
-            'surname' => self::faker()->lastName(),
-            'phoneNumber' => '+48123456789',
             'email' => self::faker()->unique()->safeEmail(),
-            'password' => password_hash('password', PASSWORD_DEFAULT),
-            'enabled' => true,
+            'password' => password_hash('Password123!', PASSWORD_DEFAULT),
+            'firmId' => 5
         ];
     }
 

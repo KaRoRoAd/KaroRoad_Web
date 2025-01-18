@@ -25,86 +25,12 @@ final class UserRegisterCommandValidationTest extends ApiTestCase
                     'Content-Type' => self::CONTENT_TYPE,
                 ],
                 'json' => [
-                    'name' => 'Test',
-                    'surname' => 'User',
                     'email' => 'Test1@example.com',
-                    'phoneNumber' => '+48123456789',
                     'password' => 'Password123!',
                     'confirmPassword' => 'Password123!',
-                    'agree' => true,
                 ],
             ])
             ->assertStatus(202);
-    }
-
-    /**
-     * @throws JsonException
-     */
-    public function testValidationFailsForEmptyName(): void
-    {
-        $response = $this->browser()
-            ->post(self::API_URI, [
-                'headers' => [
-                    'Content-Type' => self::CONTENT_TYPE,
-                ],
-                'json' => [
-                    'name' => '',
-                    'surname' => 'Kowalski',
-                    'email' => 'test@example.com',
-                    'phoneNumber' => '+48123456789',
-                    'password' => 'StrongPass123!',
-                    'confirmPassword' => 'StrongPass123!',
-                    'agree' => true,
-                ],
-            ])
-            ->assertStatus(422)
-            ->json()
-            ->decoded();
-
-        $this->assertArrayHasKey('violations', $response);
-
-        $expectedViolation = [
-            'propertyPath' => 'name',
-            'message' => ValidationMessageEnum::NAME_REQUIRED->value,
-            'code' => $response['violations'][0]['code'],
-        ];
-
-        $this->assertContainsEquals($expectedViolation, $response['violations']);
-    }
-
-    /**
-     * @throws JsonException
-     */
-    public function testValidationFailsForEmptySurname(): void
-    {
-        $response = $this->browser()
-            ->post(self::API_URI, [
-                'headers' => [
-                    'Content-Type' => self::CONTENT_TYPE,
-                ],
-                'json' => [
-                    'name' => 'Jan',
-                    'surname' => '',
-                    'email' => 'test@example.com',
-                    'phoneNumber' => '+48123456789',
-                    'password' => 'StrongPass123!',
-                    'confirmPassword' => 'StrongPass123!',
-                    'agree' => true,
-                ],
-            ])
-            ->assertStatus(422)
-            ->json()
-            ->decoded();
-
-        $this->assertArrayHasKey('violations', $response);
-
-        $expectedViolation = [
-            'propertyPath' => 'surname',
-            'message' => ValidationMessageEnum::SURNAME_REQUIRED->value,
-            'code' => $response['violations'][0]['code'],
-        ];
-
-        $this->assertContainsEquals($expectedViolation, $response['violations']);
     }
 
     /**
@@ -118,13 +44,9 @@ final class UserRegisterCommandValidationTest extends ApiTestCase
                     'Content-Type' => self::CONTENT_TYPE,
                 ],
                 'json' => [
-                    'name' => 'Jan',
-                    'surname' => 'Kowalski',
                     'email' => '',
-                    'phoneNumber' => '+48123456789',
                     'password' => 'StrongPass123!',
                     'confirmPassword' => 'StrongPass123!',
-                    'agree' => true,
                 ],
             ])
             ->assertStatus(422)
@@ -177,79 +99,6 @@ final class UserRegisterCommandValidationTest extends ApiTestCase
         $this->assertContainsEquals($expectedViolation, $response['violations']);
     }
 
-    /**
-     * @throws JsonException
-     */
-    public function testValidationFailsForEmptyPhoneNumber(): void
-    {
-        $response = $this->browser()
-            ->post(self::API_URI, [
-                'headers' => [
-                    'Content-Type' => self::CONTENT_TYPE,
-                ],
-                'json' => [
-                    'name' => 'Jan',
-                    'surname' => 'Kowalski',
-                    'email' => 'test@example.com',
-                    'phoneNumber' => '',
-                    'password' => 'StrongPass123!',
-                    'confirmPassword' => 'StrongPass123!',
-                    'agree' => true,
-                ],
-            ])
-            ->assertStatus(422)
-            ->json()
-            ->decoded();
-
-        $this->assertArrayHasKey('violations', $response);
-
-        $expectedViolation = [
-            'propertyPath' => 'phoneNumber',
-            'message' => ValidationMessageEnum::PHONE_NUMBER_REQUIRED->value,
-            'code' => $response['violations'][0]['code'],
-        ];
-
-        $this->assertContainsEquals($expectedViolation, $response['violations']);
-    }
-
-    /**
-     * @throws JsonException
-     */
-    public function testValidationFailsForInvalidPhoneNumber(): void
-    {
-        $response = $this->browser()
-            ->post(self::API_URI, [
-                'headers' => [
-                    'Content-Type' => self::CONTENT_TYPE,
-                ],
-                'json' => [
-                    'name' => 'Jan',
-                    'surname' => 'Kowalski',
-                    'email' => 'test@example.com',
-                    'phoneNumber' => '123456789',
-                    'password' => 'StrongPass123!',
-                    'confirmPassword' => 'StrongPass123!',
-                    'agree' => true,
-                ],
-            ])
-            ->assertStatus(422)
-            ->json()
-            ->decoded();
-
-        $this->assertArrayHasKey('violations', $response);
-
-        $expectedViolation = [
-            'propertyPath' => 'phoneNumber',
-            'message' => ValidationMessageEnum::PHONE_NUMBER_INVALID->value,
-            'code' => $response['violations'][0]['code'],
-        ];
-
-        $this->assertContainsEquals($expectedViolation, $response['violations']);
-    }
-
-    /**
-     * @throws JsonException
-     */
     /**
      * @throws JsonException
      */

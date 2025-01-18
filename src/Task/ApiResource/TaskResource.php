@@ -53,7 +53,7 @@ use DateTime;
             stateless: true,
             description: 'Delete a task',
             name: 'api_delete_task'
-        )
+        ),
     ],
     provider: EntityToDtoStateProvider::class,
     processor: EntityClassDtoStateProcessor::class,

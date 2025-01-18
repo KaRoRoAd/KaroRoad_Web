@@ -63,7 +63,7 @@ use App\Shared\State\EntityToDtoStateProvider;
             output: false,
             messenger: true,
             name: 'api_firm_management_update_role_employee',
-        )
+        ),
     ],
     provider: EntityToDtoStateProvider::class,
     stateOptions: new Options(entityClass: User::class),

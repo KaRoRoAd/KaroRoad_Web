@@ -8,7 +8,6 @@ use ApiPlatform\Doctrine\Orm\Extension\QueryCollectionExtensionInterface;
 use ApiPlatform\Doctrine\Orm\Extension\QueryItemExtensionInterface;
 use ApiPlatform\Doctrine\Orm\Util\QueryNameGeneratorInterface;
 use ApiPlatform\Metadata\Operation;
-use App\Firm\Entity\Firm;
 use App\Security\Entity\User;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -43,4 +42,3 @@ final readonly class CurrentFirmExtension implements QueryCollectionExtensionInt
             ->setParameter('current_user', $user->getId());
     }
 }
-

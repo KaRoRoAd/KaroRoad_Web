@@ -15,29 +15,29 @@ services:
       - '${FORWARD_DB_PORT:-3309}:3306'
     environment:
       MYSQL_ROOT_PASSWORD: 'root'
-      MYSQL_ROOT_HOST: 'root'
       MYSQL_DATABASE: 'KaroRoadWeb'
       MYSQL_USER: 'KaroRoadWeb'
       MYSQL_PASSWORD: 'KaroRoadWeb123!'
-      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'no'
     volumes:
       - 'KaroRoadWeb-mysql:/var/lib/mysql'
     networks:
       - KaroRoadWeb-network
-    healthcheck:
-      test:
-        - CMD
-        - mysqladmin
-        - ping
-        - '-pKaroRoadWeb123!'
-      retries: 3
-      timeout: 5s
+
+  mailer:
+    image: axllent/mailpit
+    ports:
+      - "62615:1025"
+      - "62616:8025"
+    environment:
+      MP_SMTP_AUTH_ACCEPT_ANY: 1
+      MP_SMTP_AUTH_ALLOW_INSECURE: 1
+    networks:
+        - KaroRoadWeb-network
 
 networks:
   KaroRoadWeb-network:
     driver: bridge
 volumes:
   KaroRoadWeb-mysql:
-    driver: local
-  KaroRoadWeb-test-mysql:
     driver: local

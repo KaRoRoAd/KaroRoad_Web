@@ -10,6 +10,7 @@ use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Post;
 use App\Security\Entity\User;
 use App\Security\Handler\RegisterUserCommand;
+use App\Security\Handler\ResetUserPasswordCommand;
 
 #[ApiResource(
     shortName: 'Security',
@@ -24,8 +25,28 @@ use App\Security\Handler\RegisterUserCommand;
             messenger: true,
             name: 'api_register_user'
         ),
+        new Post(
+            uriTemplate: '/users/reset_password',
+            stateless: false,
+            status: 202,
+            description: 'Reset password user',
+            input: ResetUserPasswordCommand::class,
+            output: false,
+            messenger: true,
+            name: 'api_reset_password_user'
+        ),
+        new Post(
+            uriTemplate: '/users/change_password',
+            stateless: false,
+            status: 202,
+            description: 'Change Password',
+            input: ResetUserPasswordCommand::class,
+            output: false,
+            messenger: true,
+            name: 'api_change_password_user'
+        ),
     ],
-    stateOptions: new Options(entityClass: User::class)
+    stateOptions: new Options(entityClass: User::class),
 )
 ]
 final class UserResource

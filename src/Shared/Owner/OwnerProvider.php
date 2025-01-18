@@ -17,7 +17,7 @@ final readonly class OwnerProvider implements OwnerProviderInterface
     public function getOwnerDto(): ?OwnerDto
     {
         $user = $this->tokenStorage->getToken()?->getUser();
-        if (!$user) {
+        if (! $user) {
             return null;
         }
 

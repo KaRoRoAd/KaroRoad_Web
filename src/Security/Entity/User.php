@@ -4,11 +4,8 @@ declare(strict_types=1);
 
 namespace App\Security\Entity;
 
-use App\Task\Entity\Task;
 use App\Security\Enum\RoleEnum;
 use App\Security\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -40,7 +37,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(name: 'firm_id', type: Types::INTEGER, nullable: true)]
     private ?int $firmId = null;
-
 
     public function __construct(string $email, string $password)
     {

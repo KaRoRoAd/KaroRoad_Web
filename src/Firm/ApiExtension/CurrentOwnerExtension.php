@@ -40,4 +40,3 @@ final readonly class CurrentOwnerExtension implements QueryCollectionExtensionIn
             ->setParameter('current_user', $user->getId());
     }
 }
-

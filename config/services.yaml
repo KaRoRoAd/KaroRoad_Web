@@ -49,8 +49,10 @@ services:
     App\Security\Validator\PasswordStrengthValidator:
         tags: [ 'validator.constraint_validator' ]
 
-    App\Security\Handler\RegisterUserHandler:
-        tags: [ 'messenger.message_handler' ]
+    App\Mailing\Sender\ResetPasswordMailing:
+        arguments:
+            $mailer: '@mailer.mailer'
+            $from: '%env(MAILING_FROM)%'
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
