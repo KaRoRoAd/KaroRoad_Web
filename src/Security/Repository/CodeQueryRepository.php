@@ -14,4 +14,9 @@ final class CodeQueryRepository extends ServiceEntityRepository implements CodeQ
     {
         parent::__construct($registry, CodeForResetPassword::class);
     }
+
+    public function findOneByUserId(int $userId): ?CodeForResetPassword
+    {
+        return $this->findOneBy(['userId' => $userId]);
+    }
 }

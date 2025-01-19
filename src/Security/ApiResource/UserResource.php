@@ -9,6 +9,7 @@ use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Post;
 use App\Security\Entity\User;
+use App\Security\Handler\ChangeUserPasswordCommand;
 use App\Security\Handler\RegisterUserCommand;
 use App\Security\Handler\ResetUserPasswordCommand;
 
@@ -40,7 +41,7 @@ use App\Security\Handler\ResetUserPasswordCommand;
             stateless: false,
             status: 202,
             description: 'Change Password',
-            input: ResetUserPasswordCommand::class,
+            input: ChangeUserPasswordCommand::class,
             output: false,
             messenger: true,
             name: 'api_change_password_user'
