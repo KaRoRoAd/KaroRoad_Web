@@ -33,6 +33,7 @@ final readonly class TaskEntityToApiResourceMapper implements MapperInterface
         $dto->name = $entity->getName();
         $dto->deadLine = $entity->getDeadLine();
         $dto->status = $entity->getStatus();
+        $dto->employeeId = $entity->getEmployeeId();
 
         return $dto;
     }
