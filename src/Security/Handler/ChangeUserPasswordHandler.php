@@ -29,9 +29,9 @@ final readonly class ChangeUserPasswordHandler
 
     public function __invoke(ChangeUserPasswordCommand $command): void
     {
-        $user = $this->guard($command->email);
-
         $code = $this->codeQueryRepository->findOneBy(['code' => $command->code]);
+
+        $user = $this->guard($code->getUserId());
 
         if ($code instanceof CodeForResetPassword) {
             /** @var CodeForResetPassword $code */
@@ -46,9 +46,9 @@ final readonly class ChangeUserPasswordHandler
         $this->userRepository->save($user);
     }
 
-    private function guard(string $email): ?UserInterface
+    private function guard(int $userId): ?UserInterface
     {
-        $user = $this->userQueryRepository->findOneByEmail($email);
+        $user = $this->userQueryRepository->find($userId);
         if ($user === null) {
             throw new InvalidArgumentException(ExceptionCommunicationEnum::USER_NOT_FOUND->value);
         }

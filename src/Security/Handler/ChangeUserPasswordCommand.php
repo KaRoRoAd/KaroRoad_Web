@@ -13,9 +13,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 final readonly class ChangeUserPasswordCommand
 {
     public function __construct(
-        #[Assert\NotBlank(message: ValidationMessageEnum::EMAIL_REQUIRED->value)]
-        #[Assert\Email(message: ValidationMessageEnum::EMAIL_INVALID->value)]
-        public string $email,
         #[Assert\NotBlank(message: ValidationMessageEnum::PASSWORD_REQUIRED->value)]
         #[PasswordStrength]
         public string $password,
