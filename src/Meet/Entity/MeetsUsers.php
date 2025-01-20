@@ -16,7 +16,7 @@ class MeetsUsers
     private ?int $id = null;
 
     #[ORM\Column]
-    private ?int $userId = null;
+    private ?string $email = null;
 
     #[ORM\Column]
     private ?int $meetId = null;
@@ -26,16 +26,14 @@ class MeetsUsers
         return $this->id;
     }
 
-    public function getUserId(): ?int
+    public function getEmail(): ?string
     {
-        return $this->userId;
+        return $this->email;
     }
 
-    public function setUserId(int $userId): static
+    public function setEmail(?string $email): void
     {
-        $this->userId = $userId;
-
-        return $this;
+        $this->email = $email;
     }
 
     public function getMeetId(): ?int

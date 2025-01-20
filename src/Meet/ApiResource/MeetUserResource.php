@@ -12,6 +12,7 @@ use ApiPlatform\Metadata\Post;
 use App\Meet\Entity\MeetsUsers;
 use App\Shared\State\EntityClassDtoStateProcessor;
 use App\Shared\State\EntityToDtoStateProvider;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ApiResource(
     shortName: 'MeetsUsers',
@@ -45,7 +46,9 @@ final class MeetUserResource
         #[ApiProperty(readable: true, writable: false, identifier: true)]
         public ?int $id = null,
         public ?int $meetId = null,
-        public ?int $userId = null,
+        #[Assert\NotBlank]
+        #[Assert\Email]
+        public ?string $email = null,
     ) {
     }
 }

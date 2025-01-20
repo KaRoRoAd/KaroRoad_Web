@@ -31,7 +31,7 @@ final readonly class MeetUserEntityToApiResourceMapper implements MapperInterfac
         assert($dto instanceof MeetUserResource);
 
         $dto->meetId = $entity->getMeetId();
-        $dto->userId = $entity->getUserId();
+        $dto->email = $entity->getEmail();
 
         return $dto;
     }
