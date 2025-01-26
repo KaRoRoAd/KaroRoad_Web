@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="" tests="13" assertions="47" errors="0" warnings="0" failures="0" skipped="0" time="1.355065">
+    <testsuite name="Project Test Suite" tests="13" assertions="47" errors="0" warnings="0" failures="0" skipped="0" time="1.355065">
+      <testsuite name="App\Tests\Security\Integration\UserLoginResourceTest" file="/var/www/tests/Security/Integration/UserLoginResourceTest.php" tests="1" assertions="4" errors="0" warnings="0" failures="0" skipped="0" time="0.409782">
+        <testcase name="testCanLoginAsGuest" class="App\Tests\Security\Integration\UserLoginResourceTest" classname="App.Tests.Security.Integration.UserLoginResourceTest" file="/var/www/tests/Security/Integration/UserLoginResourceTest.php" line="16" assertions="4" time="0.409782"/>
+      </testsuite>
+      <testsuite name="App\Tests\Security\Integration\UserRegisterCommandValidationTest" file="/var/www/tests/Security/Integration/UserRegisterCommandValidationTest.php" tests="9" assertions="34" errors="0" warnings="0" failures="0" skipped="0" time="0.930939">
+        <testcase name="testUserRegistration" class="App\Tests\Security\Integration\UserRegisterCommandValidationTest" classname="App.Tests.Security.Integration.UserRegisterCommandValidationTest" file="/var/www/tests/Security/Integration/UserRegisterCommandValidationTest.php" line="20" assertions="1" time="0.179494"/>
+        <testcase name="testValidationFailsForEmptyEmail" class="App\Tests\Security\Integration\UserRegisterCommandValidationTest" classname="App.Tests.Security.Integration.UserRegisterCommandValidationTest" file="/var/www/tests/Security/Integration/UserRegisterCommandValidationTest.php" line="39" assertions="4" time="0.161139"/>
+        <testcase name="testValidationFailsForInvalidEmail" class="App\Tests\Security\Integration\UserRegisterCommandValidationTest" classname="App.Tests.Security.Integration.UserRegisterCommandValidationTest" file="/var/www/tests/Security/Integration/UserRegisterCommandValidationTest.php" line="70" assertions="4" time="0.091808"/>
+        <testcase name="testValidationFailsForEmptyPassword" class="App\Tests\Security\Integration\UserRegisterCommandValidationTest" classname="App.Tests.Security.Integration.UserRegisterCommandValidationTest" file="/var/www/tests/Security/Integration/UserRegisterCommandValidationTest.php" line="105" assertions="5" time="0.084589"/>
+        <testcase name="testValidationFailsForNonMatchingPasswords" class="App\Tests\Security\Integration\UserRegisterCommandValidationTest" classname="App.Tests.Security.Integration.UserRegisterCommandValidationTest" file="/var/www/tests/Security/Integration/UserRegisterCommandValidationTest.php" line="148" assertions="4" time="0.082443"/>
+        <testcase name="testValidationFailsForShortPassword" class="App\Tests\Security\Integration\UserRegisterCommandValidationTest" classname="App.Tests.Security.Integration.UserRegisterCommandValidationTest" file="/var/www/tests/Security/Integration/UserRegisterCommandValidationTest.php" line="183" assertions="4" time="0.091212"/>
+        <testcase name="testValidationFailsForPasswordWithoutUppercase" class="App\Tests\Security\Integration\UserRegisterCommandValidationTest" classname="App.Tests.Security.Integration.UserRegisterCommandValidationTest" file="/var/www/tests/Security/Integration/UserRegisterCommandValidationTest.php" line="218" assertions="4" time="0.077128"/>
+        <testcase name="testValidationFailsForPasswordWithoutNumber" class="App\Tests\Security\Integration\UserRegisterCommandValidationTest" classname="App.Tests.Security.Integration.UserRegisterCommandValidationTest" file="/var/www/tests/Security/Integration/UserRegisterCommandValidationTest.php" line="253" assertions="4" time="0.082351"/>
+        <testcase name="testValidationFailsForPasswordWithoutSpecialCharacter" class="App\Tests\Security\Integration\UserRegisterCommandValidationTest" classname="App.Tests.Security.Integration.UserRegisterCommandValidationTest" file="/var/www/tests/Security/Integration/UserRegisterCommandValidationTest.php" line="288" assertions="4" time="0.080775"/>
+      </testsuite>
+      <testsuite name="App\Tests\Security\Unit\Handler\AddUserToFirmHandlerTest" file="/var/www/tests/Security/Unit/Handler/AddUserToFirmHandlerTest.php" tests="1" assertions="3" errors="0" warnings="0" failures="0" skipped="0" time="0.013411">
+        <testcase name="testCanAddUserToFirm" class="App\Tests\Security\Unit\Handler\AddUserToFirmHandlerTest" classname="App.Tests.Security.Unit.Handler.AddUserToFirmHandlerTest" file="/var/www/tests/Security/Unit/Handler/AddUserToFirmHandlerTest.php" line="16" assertions="3" time="0.013411"/>
+      </testsuite>
+      <testsuite name="App\Tests\Security\Unit\Handler\DeleteEmployeeFromFirmHandlerTest" file="/var/www/tests/Security/Unit/Handler/DeleteEmployeeFromFirmHandlerTest.php" tests="1" assertions="3" errors="0" warnings="0" failures="0" skipped="0" time="0.000480">
+        <testcase name="testCanDeleteEmployeeFromFirm" class="App\Tests\Security\Unit\Handler\DeleteEmployeeFromFirmHandlerTest" classname="App.Tests.Security.Unit.Handler.DeleteEmployeeFromFirmHandlerTest" file="/var/www/tests/Security/Unit/Handler/DeleteEmployeeFromFirmHandlerTest.php" line="16" assertions="3" time="0.000480"/>
+      </testsuite>
+      <testsuite name="App\Tests\Security\Unit\Handler\UpdateRoleEmployeeHandlerTest" file="/var/www/tests/Security/Unit/Handler/UpdateRoleEmployeeHandlerTest.php" tests="1" assertions="3" errors="0" warnings="0" failures="0" skipped="0" time="0.000452">
+        <testcase name="testCanUpdateEmployeeRoles" class="App\Tests\Security\Unit\Handler\UpdateRoleEmployeeHandlerTest" classname="App.Tests.Security.Unit.Handler.UpdateRoleEmployeeHandlerTest" file="/var/www/tests/Security/Unit/Handler/UpdateRoleEmployeeHandlerTest.php" line="16" assertions="3" time="0.000452"/>
+      </testsuite>
+    </testsuite>
+  </testsuite>
+</testsuites>

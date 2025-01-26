@@ -20,15 +20,6 @@ final class UserRepository extends ServiceEntityRepository implements UserReposi
         parent::__construct($registry, User::class);
     }
 
-    public function loadUserByIdentifier(string $identifier): ?UserInterface
-    {
-        return $this->createQueryBuilder('ue')
-            ->andWhere('ue.email = :email')
-            ->setParameter('email', $identifier)
-            ->getQuery()
-            ->getOneOrNullResult();
-    }
-
     public function save(UserInterface $user): UserInterface
     {
         $em = $this->getEntityManager();
@@ -36,5 +27,14 @@ final class UserRepository extends ServiceEntityRepository implements UserReposi
         $em->flush();
 
         return $user;
+    }
+
+    public function loadUserByIdentifier(string $identifier): ?UserInterface
+    {
+        return $this->createQueryBuilder('ue')
+            ->andWhere('ue.email = :email')
+            ->setParameter('email', $identifier)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 }
